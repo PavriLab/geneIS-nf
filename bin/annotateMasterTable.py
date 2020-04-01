@@ -47,3 +47,9 @@ if __name__ == '__main__':
 
     logging.info('writing output table')
     mt.to_csv(args.outputFile, sep = '\t', index = False)
+
+    for feature in mt.annotation.unique():
+        mt[feature] = 0
+        mt.loc[mt.annotation == feature, feature] = 1
+
+    mt.to_csv(args.outputFile + '.plotTable', sep = '\t', index = False)
