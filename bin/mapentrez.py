@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 from Bio import Entrez
 import pandas as pd
 from urllib.error import HTTPError
@@ -67,9 +69,9 @@ if __name__ == '__main__':
                         help = 'number of EntrezIds to fetch from the database at once (larger values might increase runtime)')
     parser.add_argument('--email', required = True,
                         help = 'email address to use for connecting to the Entrez database')
-    parser.add_argument('-m', '--mapping',
+    parser.add_argument('-m', '--mapping', default = None,
                         help = 'name of the file containing the mapping from EntrezID to gene symbol (is created if not already existing)')
-    parser.add_argument('-o', '--outputFile', default = '.',
+    parser.add_argument('-o', '--outputFile', required = True,
                         help = 'name of the file to write results to')
     args = parser.parse_args()
 

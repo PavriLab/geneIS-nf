@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 import pandas as pd
 import argparse as ap
 import numpy as np

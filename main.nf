@@ -42,7 +42,7 @@ def helpMessage() {
 
     --txDb            file containing annotation database for a current genetic annotation
                       can be generated with the GenomicFeatures Bioconductor package
-                      ideally use refGene table for generation (Default: packaged version)
+                      ideally use refGene table for generation
 
     --email           email address to use to fetch genesymbols from EntrezIds
 
@@ -60,4 +60,80 @@ params.help = false
 if (params.help) {
   helpMessage()
   exit 0
+}
+
+if (params.masterTable) {
+  if (!file(params.masterTable).exists()) {
+    exit 1, "--masterTable was specified but does not exist"
+  }
+} else {
+  exit 1, "--masterTable is requried but was not set!"
+}
+
+if (params.txDb) {
+  if (!file(params.txDb).exists()) {
+    exit 1, "--txDb was specified but does not exist"
+  }
+} else {
+  exit 1, "--txDb is required but was not set!"
+}
+
+if (!params.email) {
+  exit 1, "--email needs to be set"
+}
+
+log.info ""
+log.info " parameters"
+log.info " ======================"
+log.info " masterTable              : ${params.masterTable}"
+log.info " txDb                     : ${params.txDb}"
+log.info " email                    : ${params.email}"
+log.info " filePrefix               : ${params.filePrefix}"
+log.info " outputDir                : ${params.outputDir}"
+log.info " ======================"
+log.info ""
+
+inputChannel = Channel
+                  .fromList([[val(params.filePrefix),
+                              file(params.masterTable),
+                              file(params.txDb)]])
+
+process computeGeneAnnotation {
+
+  tag { filePrefix }
+
+  input:
+  set val(filePrefix), file(masterTable), file(txDb) from inputChannel
+
+  output:
+  set val(filePrefix), file("${filePrefx}.chipseeker.tsv") into resultsGeneAnnotation
+
+  shell:
+  '''
+  cut -f 1,2,3,4 !{masterTable} > master.tmp.bed
+  annotateInitSites.R master.tmp.bed !{txDb} !{filePrefix}.chipseeker.tsv
+  '''
+}
+
+process mapEntrezIds {
+
+  tag { filePrefix }
+
+  publishDir  path: "${params.outputDir}",
+              mode: "copy",
+              overwrite: "true",
+              pattern: "*.chipseeker.mapped.tsv"
+
+  input:
+  set val(filePrefix), file(annotation) from resultsGeneAnnotation
+
+  output:
+
+  shell:
+  '''
+  mapentrez.py -a !{annotation} \
+               --email !{params.email} \
+               -m entrezEntries.txt \
+               -o !{filePrefix}.chipseeker.mapped.tsv
+  '''
 }
