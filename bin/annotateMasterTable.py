@@ -41,7 +41,7 @@ if __name__ == '__main__':
 
     logging.info('merging tables')
     mt = mt.merge(anno[['name', 'annotation', 'symbol'],
-                  how = 'left', on = ['chr', 'start', 'end'])
+                  how = 'left', on = 'name')
 
     logging.info('writing output table')
     mt.to_csv(args.outputFile, sep = '\t', index = False)
