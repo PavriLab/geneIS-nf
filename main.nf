@@ -106,7 +106,7 @@ process computeGeneAnnotation {
   set val(filePrefix), file(masterTable), file(txDb) from inputChannel
 
   output:
-  set val(filePrefix), file("${filePrefx}.chipseeker.tsv") into resultsGeneAnnotation
+  set val(filePrefix), file("${filePrefx}.chipseeker.tsv"), file(masterTable) into resultsGeneAnnotation
 
   shell:
   '''
@@ -125,9 +125,10 @@ process mapEntrezIds {
               pattern: "*.chipseeker.mapped.tsv"
 
   input:
-  set val(filePrefix), file(annotation) from resultsGeneAnnotation
+  set val(filePrefix), file(annotation) file(masterTable) from resultsGeneAnnotation
 
   output:
+  set val(filePrefix), file("${filePrefix}.chipseeker.mapped.tsv"), file(masterTable) into resultsMapEntrez
 
   shell:
   '''
@@ -135,5 +136,25 @@ process mapEntrezIds {
                --email !{params.email} \
                -m entrezEntries.txt \
                -o !{filePrefix}.chipseeker.mapped.tsv
+  '''
+}
+
+process extendMasterTable {
+
+  tag { filePrefix }
+
+  publishDir  path: "${params.outputDir}",
+              mode: "copy",
+              overwrite: "true",
+              pattern: "${filePrefix}.master.tsv"
+
+  input:
+  set val(filePrefix), file(mappedAnnotation), file(masterTable) from resultsMapEntrez
+
+  output:
+
+  shell:
+  '''
+  annotateMasterTable.py -mt !{masterTable} -a !{mappedAnnotation} -o !{filePrefix}.master.tsv
   '''
 }
