@@ -44,7 +44,8 @@ def helpMessage() {
                       can be generated with the GenomicFeatures Bioconductor package
                       ideally use refGene table for generation (Default: packaged version)
 
-    --
+    --email           email address to use to fetch genesymbols from EntrezIds
+
 
     --filePrefix      prefix to use for output files (Default: ISgene)
     --outputDir       name of the directory to save results to (Default: results)
