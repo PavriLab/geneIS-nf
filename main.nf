@@ -39,6 +39,7 @@ def helpMessage() {
     --masterTable     tab-separated file containing the genomic coordinates and
                       names of the mapped initiation sites with header row and
                       first four columns being chr, start, end, name (same as BED)
+                      including quantification results
 
     --txDb            file containing annotation database for a current genetic annotation
                       can be generated with the GenomicFeatures Bioconductor package
@@ -46,6 +47,13 @@ def helpMessage() {
 
     --email           email address to use to fetch genesymbols from EntrezIds
 
+    --xCol            column of masterTable holding quantification for x-axis of plots
+    --yCol            column of masterTable holding quantification for y-axis of plots
+
+    --axMin           minimum value of axes of final plots (Default: 0)
+    --axMax           maximum value of axes of final plots (Default: 8)
+
+    --foldChange      adds diagonal lines in distance of foldChange to plot
 
     --filePrefix      prefix to use for output files (Default: ISgene)
     --outputDir       name of the directory to save results to (Default: results)
@@ -88,6 +96,10 @@ log.info " ======================"
 log.info " masterTable              : ${params.masterTable}"
 log.info " txDb                     : ${params.txDb}"
 log.info " email                    : ${params.email}"
+log.info " xCol                     : ${params.xCol}"
+log.info " yCol                     : ${params.yCol}"
+log.info " axMin                    : ${params.axMin}"
+log.info " axMax                    : ${params.axMax}"
 log.info " filePrefix               : ${params.filePrefix}"
 log.info " outputDir                : ${params.outputDir}"
 log.info " ======================"
@@ -152,9 +164,49 @@ process extendMasterTable {
   set val(filePrefix), file(mappedAnnotation), file(masterTable) from resultsMapEntrez
 
   output:
+  set file("${filePrefix}.master.tsv"), file("${filePrefix}.master.tsv.plotTable") into resultsExtendMaster
 
   shell:
   '''
   annotateMasterTable.py -mt !{masterTable} -a !{mappedAnnotation} -o !{filePrefix}.master.tsv
+  '''
+}
+
+process plotting {
+
+  tag { filePrefix }
+
+  publishDir  path: "${params.outputDir}",
+              mode: "copy",
+              overwrite: "true",
+              pattern: "*.pdf"
+
+  input:
+  set file(masterTable), file(plotTable) from resultsExtendMaster
+
+  output:
+  set file("${filePrefix}.Promoter.pdf"), file("${filePrefix}.Exon.pdf"), file("${filePrefix}.Intron.pdf"), file("${filePrefix}.Intergenic.pdf") into resultsPlotting
+
+  shell:
+  '''
+  for geneFeature in Promoter Exon Intron Intergenic;
+  do
+    datashader.py -mt !{plotTable} \
+                  --xcol !{params.xCol} --ycol !{params.yCol} \
+                  --xmin !{params.axMin} --xmax !{params.axMax} \
+                  --ymin !{params.axMin} --ymax !{params.axMax} \
+                  --subsetColumn !{geneFeature} \
+                  --xlabel "!{params.xCol} log2(RPM)" \
+                  --ylabel "!{params.yCol} log2(RPM)" \
+                  --density F T \
+                  --colormaps Grey,Grey coolwarm \
+                  --foldchange !{params.foldChange} \
+                  --plotmethod mesh \
+                  --figwidth 6 --figheight 6 \
+                  -o !{filePrefix}.${geneFeature}.pdf \
+                  --xbins 200 --ybins 200 \
+                  --labels rest $geneFeature \
+                  --plotCounts
+    done
   '''
 }
