@@ -23,28 +23,31 @@ nextflow pull dmalzl/classifyIS-nf
 
 iv. Start running your own analysis!
 ```bash
-nextflow run dmalzl/classifyIS-nf --sitesA A_IS.bed --bamA conditionA.bam --labelA WT --sitesB B_IS.bed  --bamB conditionB.bam --labelB KD
+nextflow run dmalzl/geneIS-nf --masterTable IS.master.tsv --txDb annotation.sql --email e@mail.com --xCol WT_col --yCol KD_col
 ```
 
 ## Main arguments
 #### `-profile`
 Use this parameter to choose a configuration profile. Profiles can give configuration presets for different compute environments. For example `-profile cbe` invokes the execution of processes using the [`slurm`](https://slurm.schedmd.com/documentation.html) workload manager. If no profile is given the pipeline will be executed locally.
 
-#### `--sitesA`/`--sitesB`
-Initiaton sites for conditions A and B (e.g. mapped with [`iniseq-nf`](https://github.com/dmalzl/inisite-nf))
+#### `--masterTable`
+Mastertable containing at least quantification results (see [`classifyIS-nf`](https://github.com/pavrilab/classifyIS-nf))
 
-#### `--bamA`/`--bamB`
-BAM files containing aligned reads from which the initiation sites were mapped
+#### `--txDb`
+SQL file containing a gene annoation generated with the GenomicFeatures R-package
+
+#### `--email`
+Email address to fetch EntrezIDs with BioPython
+
+#### `--xCol`
+column in the mastertable holding SNS-seq read quantification results for WT
+
+#### `--yCol`
+column in the mastertable holding SNS-seq read quantification results for KD
 
 ## Generic arguments
-#### `--labelA`/`--labelB`
-Optional label for conditions A and B. Use this to customize labels of the conditions in the result files (defaults to A and B respectively)
-
-#### `--FC`
-log2(RPM) cutoff to use for assigning upregulation or downregulation (i.e. differential regulation) for a given peak (Default: 0.585 = log2(1.5))
-
-#### `--t`
-log2(RPM) cutoff to use for specifying putative peak call threshold (i.e. putatively dormant or absent peaks; Default: 2)
+#### `--foldChange`
+adds diagonal lines in distance of foldChange to plot
 
 #### `--axMin`
 Lower bound for axis values of x- and y-axis (Default: 0)
