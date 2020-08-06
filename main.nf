@@ -164,7 +164,7 @@ process extendMasterTable {
   set val(filePrefix), file(mappedAnnotation), file(masterTable) from resultsMapEntrez
 
   output:
-  set file("${filePrefix}.master.tsv"), file("${filePrefix}.master.tsv.plotTable") into resultsExtendMaster
+  set val(filePrefix), file("${filePrefix}.master.tsv"), file("${filePrefix}.master.tsv.plotTable") into resultsExtendMaster
 
   shell:
   '''
@@ -182,7 +182,7 @@ process plotting {
               pattern: "*.pdf"
 
   input:
-  set file(masterTable), file(plotTable) from resultsExtendMaster
+  set val(filePrefix), file(masterTable), file(plotTable) from resultsExtendMaster
 
   output:
   set file("${filePrefix}.Promoter.pdf"), file("${filePrefix}.Exon.pdf"), file("${filePrefix}.Intron.pdf"), file("${filePrefix}.Intergenic.pdf") into resultsPlotting
