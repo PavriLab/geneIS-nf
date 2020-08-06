@@ -118,7 +118,7 @@ process computeGeneAnnotation {
   set val(filePrefix), file(masterTable), file(txDb) from inputChannel
 
   output:
-  set val(filePrefix), file("${filePrefx}.chipseeker.tsv"), file(masterTable) into resultsGeneAnnotation
+  set val(filePrefix), file("${filePrefix}.chipseeker.tsv"), file(masterTable) into resultsGeneAnnotation
 
   shell:
   '''
