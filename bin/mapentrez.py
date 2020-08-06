@@ -116,4 +116,4 @@ if __name__ == '__main__':
 
     # converting back to 0-based half open as ChipSeeker converts to 1-based fully closed
     anno.loc[:, 'start'] = anno['start'] - 1
-    anno.to_csv(args.outputFile), sep='\t', index=False)
+    anno.to_csv(args.outputFile, sep='\t', index=False)
