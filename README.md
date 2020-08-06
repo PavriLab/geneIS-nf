@@ -20,12 +20,12 @@ ii. Install the [`pandas`](https://pandas.pydata.org/docs/index.html), [`numpy`]
 
 iii. Clone repository with 
 ```bash
-nextflow pull dmalzl/geneIS-nf
+nextflow pull pavrilab/geneIS-nf
 ```
 
 iv. Start running your own analysis!
 ```bash
-nextflow run dmalzl/geneIS-nf --masterTable IS.master.tsv --txDb annotation.sql --email e@mail.com --xCol WT_col --yCol KD_col
+nextflow run pavrilab/geneIS-nf --masterTable IS.master.tsv --txDb annotation.sql --email e@mail.com --xCol WT_col --yCol KD_col
 ```
 
 ## Main arguments
