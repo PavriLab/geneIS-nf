@@ -106,7 +106,7 @@ log.info " ======================"
 log.info ""
 
 inputChannel = Channel
-                  .fromList([[val(params.filePrefix),
+                  .fromList([[params.filePrefix,
                               file(params.masterTable),
                               file(params.txDb)]])
 
