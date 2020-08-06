@@ -462,7 +462,7 @@ if args.plotmethod == 'scatter':
         text = args.text
 
     elif args.plotCounts:
-        text = "{0}/{1}".format(counts[0], len(table))
+        text = "{0}/{1}".format(len(table[table[args.subsetColumn] == 1]), len(table))
 
     else:
         text = None
@@ -502,7 +502,7 @@ else:
         text = args.text
 
     elif args.plotCounts:
-        text = "{0}/{1}".format(len(table[table[args.subsetColumn == 1]]), len(table))
+        text = "{0}/{1}".format(len(table[table[args.subsetColumn] == 1]), len(table))
 
     else:
         text = None
