@@ -195,7 +195,7 @@ process plotting {
                   --xcol !{params.xCol} --ycol !{params.yCol} \
                   --xmin !{params.axMin} --xmax !{params.axMax} \
                   --ymin !{params.axMin} --ymax !{params.axMax} \
-                  --subsetColumn !{geneFeature} \
+                  --subsetColumn ${geneFeature} \
                   --xlabel "!{params.xCol} log2(RPM)" \
                   --ylabel "!{params.yCol} log2(RPM)" \
                   --density F T \
