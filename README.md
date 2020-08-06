@@ -16,7 +16,7 @@ The pipeline is built using [Nextflow](https://www.nextflow.io), a workflow tool
 
 i. Install [`nextflow`](https://nf-co.re/usage/installation)
 
-ii. Install the [`pandas`](https://pandas.pydata.org/docs/index.html), [`numpy`](https://numpy.org/), [`scipy`](https://www.scipy.org/) and [`matplotlib`](https://matplotlib.org/) and [`BioPython`](https://github.com/biopython/biopython) Python packages and the [`BiocManager`](https://github.com/Bioconductor/BiocManager), [`GenomicFeatures`](http://www.bioconductor.org/packages/release/bioc/html/GenomicFeatures.html) and [`ChIPseeker`](https://bioconductor.org/packages/release/bioc/html/ChIPseeker.html) R packages
+ii. Install the [`pandas`](https://pandas.pydata.org/docs/index.html), [`numpy`](https://numpy.org/), [`scipy`](https://www.scipy.org/) and [`matplotlib`](https://matplotlib.org/) and [`BioPython`](https://github.com/biopython/biopython) Python packages and the [`argparser`](https://cran.r-project.org/web/packages/argparser/index.html), [`BiocManager`](https://github.com/Bioconductor/BiocManager), [`GenomicFeatures`](http://www.bioconductor.org/packages/release/bioc/html/GenomicFeatures.html) and [`ChIPseeker`](https://bioconductor.org/packages/release/bioc/html/ChIPseeker.html) R packages
 
 iii. Clone repository with 
 ```bash
