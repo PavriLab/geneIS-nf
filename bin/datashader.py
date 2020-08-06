@@ -233,9 +233,6 @@ def plotmesh(hs, clrmaps, xlims, ylims, datalabels, background = None, ax = None
             startpos = (ceil(min_) - min_) * step
             startlabel = ceil(min_)
         
-        print(spacer, spacing, axismax, max_, min_, integerscale)
-        print(np.arange(startpos, axismax, spacer * spacing))
-        print(list(range(startlabel, int(max_) + 1, spacing)))
         setpos(np.arange(startpos, axismax, spacer * spacing))
         setlabels(range(startlabel, int(max_) + 1, spacing))
 
