@@ -42,7 +42,7 @@ if __name__ == '__main__':
     anno.loc[:, 'annotation'] = anno.annotation.apply(unifyAnno)
 
     logging.info('merging tables')
-    mt = mt.merge(anno[['name', 'annotation', 'symbol'],
+    mt = mt.merge(anno.loc[:, ['name', 'annotation', 'symbol']],
                   how = 'left', on = 'name')
 
     logging.info('writing output table')
