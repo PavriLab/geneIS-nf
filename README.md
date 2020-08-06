@@ -4,8 +4,6 @@
 
 ## Introduction
 
-**WARNING! THIS PIPELINE HAS NOT BEEN TESTED THOROUGHLY AND MIGHT NOT WORK. IT IS MAINLY INTENDED AS A REPOSITORY FOR THE ANALYSIS CODE!**
-
 **geneIS-nf** is a bioinformatics analysis pipeline for assigning initiation sites, mapped from NS-seq data (see [`iniseq-nf`](https://github.com/pavrilab/inisite-nf) and [`classifyIS-nf`](https://github.com/pavrilab/classifyIS-nf)) their nearest gene in a reproducible way.
 
 The pipeline is built using [Nextflow](https://www.nextflow.io), a workflow tool to run tasks across multiple compute infrastructures in a very portable manner.
