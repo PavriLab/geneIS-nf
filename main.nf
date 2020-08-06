@@ -122,7 +122,7 @@ process computeGeneAnnotation {
 
   shell:
   '''
-  cut -f 1,2,3,4 !{masterTable} > master.tmp.bed
+  cut -f 1,2,3,4 !{masterTable} | tail -n +2 > master.tmp.bed
   annotateIniSites.R master.tmp.bed !{txDb} !{filePrefix}.chipseeker.tsv
   '''
 }
