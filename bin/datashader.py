@@ -234,7 +234,7 @@ def plotmesh(hs, clrmaps, xlims, ylims, datalabels, background = None, ax = None
             startlabel = ceil(min_)
         
         setpos(np.arange(startpos, axismax, spacer * spacing))
-        setlabels(range(startlabel, int(max_) + 1, spacing))
+        setlabels(range(startlabel, int(max_), spacing))
 
         if grid:
             ax.grid(ls = '-', zorder = 1, color = gridcolor)
