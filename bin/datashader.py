@@ -9,6 +9,9 @@ import matplotlib.lines as mlines
 from scipy.interpolate import interpn
 from math import ceil
 import logging
+import matplotlib
+matplotlib.rcParams['pdf.fonttype'] = 42
+matplotlib.rcParams['ps.fonttype'] = 42
 
 # define function to compute the center of each bin and use these x/y coordinated to generate the plot accordingly
 
@@ -473,10 +476,10 @@ if args.plotmethod == 'scatter':
                           ax = ax,
                           foldchange = args.foldchange,
                           coarsen = args.coarsen,
-                          grid = grid, text = args.text,
+                          grid = grid, 
+                          text = text,
                           legend = args.legend,
-                          legendpos = args.legendposition,
-                          text = text)
+                          legendpos = args.legendposition)
 
 else:
     logging.info('aggregating points')
