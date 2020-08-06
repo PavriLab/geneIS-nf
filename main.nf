@@ -137,7 +137,7 @@ process mapEntrezIds {
               pattern: "*.chipseeker.mapped.tsv"
 
   input:
-  set val(filePrefix), file(annotation) file(masterTable) from resultsGeneAnnotation
+  set val(filePrefix), file(annotation), file(masterTable) from resultsGeneAnnotation
 
   output:
   set val(filePrefix), file("${filePrefix}.chipseeker.mapped.tsv"), file(masterTable) into resultsMapEntrez
