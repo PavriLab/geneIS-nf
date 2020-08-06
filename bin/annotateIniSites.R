@@ -29,4 +29,4 @@ genes <- annotatePeak(peaks, tssRegion = c(0, 0), TxDb = txdb,
 geneframe <- as.data.frame(genes)
 
 #writing to files
-write.table(geneframe, file = args$outputFile, row.names = FALSE, sep ='\t', quote = FALSE)
+write.table(geneframe, file = argv$outputFile, row.names = FALSE, sep ='\t', quote = FALSE)
