@@ -117,3 +117,10 @@ if __name__ == '__main__':
     # converting back to 0-based half open as ChipSeeker converts to 1-based fully closed
     anno.loc[:, 'start'] = anno['start'] - 1
     anno.to_csv(args.outputFile, sep='\t', index=False)
+    
+    logging.info('writing retrieved DB information to an extra file')
+    entrezfile = open(args.mapping, 'w')
+    entrezids = open(args.mapping + '.ids', 'w')
+    for acc, record in filecontents.items():
+        entrezfile.write(record + '\n')
+        entrezids.write(acc + '\n')
