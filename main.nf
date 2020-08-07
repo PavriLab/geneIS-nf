@@ -135,12 +135,18 @@ process mapEntrezIds {
               mode: "copy",
               overwrite: "true",
               pattern: "*.chipseeker.mapped.tsv"
+              
+  publishDir  path: "${params.outputDir}",
+              mode: "copy",
+              overwrite: "true",
+              pattern: "entrezEntries*"
 
   input:
   set val(filePrefix), file(annotation), file(masterTable) from resultsGeneAnnotation
 
   output:
   set val(filePrefix), file("${filePrefix}.chipseeker.mapped.tsv"), file(masterTable) into resultsMapEntrez
+  set file("entrezEntries.txt"), file("entrezEntries.txt.ids") into entrezResults
 
   shell:
   '''
