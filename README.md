@@ -62,11 +62,11 @@ Prefix for the result files name
 Folder to which results will be written (is created if not existing)
 
 ## Results
-The pipeline generates five result files:
+The pipeline generates a bunch of result files:
 
-1.  The `*.master.tsv` file is a tab-separated file with the basic layout of a BEDfile containing the genomic coordinates of the peaks their names and quantification results for either condition and the assigned class
-2.  The `*.chipseeker.mapped.tsv` file is a tab-separated file containing the annotation results
-3.  The two PDF files `*.density.pdf` and `*.class.pdf` are the visualization of the quantification results. The density plot show the distribution of peaks in the quantification space and the class plot visualizes the class assignment results
+1.  An extended `*.master.tsv` file with annotated gene features
+2.  A `*.chipseeker.mapped.tsv` file is a tab-separated file containing the annotation results
+3.  A bunch of density plots showing the distribution of gene features over the mapped initiation sites
 
 ## Credits
 The pipeline was developed by [Daniel Malzl](mailto:daniel.malzl@gmx.at) for use at the [IMP](https://www.imp.ac.at/), Vienna.
