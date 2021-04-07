@@ -37,6 +37,7 @@ if __name__ == '__main__':
     anno = pd.read_csv(args.annotation, sep = '\t')
     anno = anno.loc[:, ['seqnames', 'start', 'end', 'V4', 'annotation', 'genesymbol']]
     anno.columns = ['chr', 'start', 'end', 'name', 'annotation', 'symbol']
+    anno.loc[anno.genesymbol.isna(), ['annotation', 'genesymbol'] = ['Intergenic', '-']
     anno.sort_values(by=['chr', 'start'], inplace =True)
     anno.reset_index(drop = True, inplace = True)
     anno.loc[:, 'annotation'] = anno.annotation.apply(unifyAnno)
